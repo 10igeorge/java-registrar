@@ -109,22 +109,12 @@ public class Student {
   }
 
   public List<Course> getCourses(){
-    String sql = "SELECT course_id FROM courses_students WHERE student_id = :id";
+
+    String sql = "SELECT DISTINCT ON (course_name) courses.* FROM students JOIN courses_students ON (students.id = courses_students.student_id) JOIN courses ON (courses_students.course_id = courses.id) WHERE students.id=:id ORDER BY course_name, id";
     try(Connection con = DB.sql2o.open()) {
-      List<Integer> allCourseIds = con.createQuery(sql)
+      return con.createQuery(sql)
         .addParameter("id", id)
-        .executeAndFetch(Integer.class);
-
-      ArrayList<Course> foundCourses = new ArrayList<Course>();
-
-      for(Integer courseId : allCourseIds) {
-        String courseQuery = "SELECT * FROM courses WHERE id=:id";
-        Course thisCourse = con.createQuery(courseQuery)
-          .addParameter("id", courseId)
-          .executeAndFetchFirst(Course.class);
-        foundCourses.add(thisCourse);
+        .executeAndFetch(Course.class);
       }
-      return foundCourses;
-    } // end try
-  }// end getCourses
+    }
 }

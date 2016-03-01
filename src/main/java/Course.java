@@ -106,22 +106,28 @@ public class Course {
   }
 
   public List<Student> getStudents(){
-    String sql = "SELECT student_id FROM courses_students WHERE course_id = :id";
-    try(Connection con = DB.sql2o.open()) {
-      List<Integer> allStudentIds = con.createQuery(sql)
+    String sql = "SELECT DISTINCT ON (id) students.* FROM courses JOIN courses_students ON (courses.id = courses_students.course_id) JOIN students ON (courses_students.student_id = students.id) WHERE courses.id=:id ORDER BY id, enrollment_date";
+    try(Connection con = DB.sql2o.open()){
+      return con.createQuery(sql)
         .addParameter("id", id)
-        .executeAndFetch(Integer.class);
+        .executeAndFetch(Student.class);
+    }
 
-      ArrayList<Student> foundStudents = new ArrayList<Student>();
-
-      for(Integer studentId : allStudentIds) {
-        String studentQuery = "SELECT * FROM students WHERE id=:id";
-        Student thisStudent = con.createQuery(studentQuery)
-          .addParameter("id", studentId)
-          .executeAndFetchFirst(Student.class);
-        foundStudents.add(thisStudent);
-      }
-      return foundStudents;
-    } // end try
+    // try(Connection con = DB.sql2o.open()) {
+    //   List<Integer> allStudentIds = con.createQuery(sql)
+    //     .addParameter("id", id)
+    //     .executeAndFetch(Integer.class);
+    //
+    //   ArrayList<Student> foundStudents = new ArrayList<Student>();
+    //
+    //   for(Integer studentId : allStudentIds) {
+    //     String studentQuery = "SELECT * FROM students WHERE id=:id";
+    //     Student thisStudent = con.createQuery(studentQuery)
+    //       .addParameter("id", studentId)
+    //       .executeAndFetchFirst(Student.class);
+    //     foundStudents.add(thisStudent);
+    //   }
+    //   return foundStudents;
+    // } // end try
   } // end getStudents
 }
