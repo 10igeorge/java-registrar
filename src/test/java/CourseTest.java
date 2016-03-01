@@ -38,4 +38,26 @@ public class CourseTest {
     Course newCourse = Course.find(economics.getId());
     assertTrue(newCourse.equals(economics));
   }
+
+  @Test
+  public void delete_deletesObjectFromDatabase(){
+    Course economics = new Course("Basic Economics", "ECON101");
+    economics.save();
+    Course homeEconomics = new Course("Home Economics", "ECON304");
+    homeEconomics.save();
+    economics.delete();
+    assertFalse(Course.all().contains(economics));
+  }
+
+  @Test
+  public void update_updatesInfoOfAnObject(){
+    Course economics = new Course("Basic Economics", "ECON101");
+    economics.save();
+    economics.updateName("Intro Economics");
+    economics.updateNumber("ECON102");
+    Course savedCourse = Course.find(economics.getId());
+    assertEquals(savedCourse.getCourseName(), "Intro Economics");
+    assertEquals(savedCourse.getCourseNumber(), "ECON102");
+    assertTrue(savedCourse.equals(economics));
+  }
 }

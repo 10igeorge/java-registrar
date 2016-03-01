@@ -62,4 +62,35 @@ public class Course {
         .executeAndFetchFirst(Course.class);
     }
   }
+
+  public void delete() {
+    String sql = "DELETE FROM courses WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  public void updateName(String newName){
+    course_name = newName;
+    String sql = "UPDATE courses SET course_name=:course_name WHERE id=:id";
+    try(Connection con = DB.sql2o.open()){
+      con.createQuery(sql)
+        .addParameter("course_name", course_name)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  public void updateNumber(String newNumber){
+    course_number = newNumber;
+    String sql = "UPDATE courses SET course_number=:course_number WHERE id=:id";
+    try(Connection con = DB.sql2o.open()){
+      con.createQuery(sql)
+        .addParameter("course_number", course_number)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
 }
