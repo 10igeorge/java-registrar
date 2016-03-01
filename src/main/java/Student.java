@@ -11,7 +11,7 @@ public class Student {
 
   public Student(String studentName, String enrollment){
     name = studentName;
-    java.sql.Date enrollment_date = java.sql.Date.valueOf(enrollment);
+    this.enrollment_date = java.sql.Date.valueOf(enrollment);
   }
 
   public int getId(){
@@ -31,7 +31,7 @@ public class Student {
     if (newStudent instanceof Student) {
       Student otherStudent = (Student) newStudent;
       return this.getName().equals(otherStudent.getName()) &&
-        //this.getEnrollmentDate().getTime() == otherStudent.getEnrollmentDate().getTime() &&
+        this.getEnrollmentDate().getTime() == otherStudent.getEnrollmentDate().getTime() &&
         this.getId() == otherStudent.getId();
 
     } else {
@@ -88,7 +88,7 @@ public class Student {
   }
 
   public void updateDate(String newDate){
-    this.enrollment_date = java.sql.Date.valueOf(newDate);
+    enrollment_date = java.sql.Date.valueOf(newDate);
     String sql = "UPDATE students SET enrollment_date=:enrollment_date WHERE id=:id";
     try(Connection con = DB.sql2o.open()){
       con.createQuery(sql)
