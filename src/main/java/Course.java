@@ -23,11 +23,33 @@ public class Course {
     return course_number;
   }
 
+  @Override
+  public boolean equals(Object newCourse) {
+    if (newCourse instanceof Course) {
+      Course otherCourse = (Course) newCourse;
+      return this.getCourseName().equals(otherCourse.getCourseName()) &&
+        this.getCourseNumber().equals(otherCourse.getCourseNumber());
+    } else {
+      return false;
+    }
+  }
+
   public static List<Course> all(){
     String sql = "SELECT * FROM courses";
     try(Connection con = DB.sql2o.open()){
       return con.createQuery(sql)
       .executeAndFetch(Course.class);
+    }
+  }
+
+  public void save() {
+    String sql = "INSERT INTO courses (course_name, course_number) VALUES (:course_name, :course_number)";
+    try(Connection con = DB.sql2o.open()){
+      this.id = (int) con.createQuery(sql, true)
+        .addParameter("course_name", course_name)
+        .addParameter("course_number", course_number)
+        .executeUpdate()
+        .getKey();
     }
   }
 }
