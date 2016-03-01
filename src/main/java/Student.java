@@ -31,8 +31,9 @@ public class Student {
     if (newStudent instanceof Student) {
       Student otherStudent = (Student) newStudent;
       return this.getName().equals(otherStudent.getName()) &&
-        this.getId() == otherStudent.getId() &&
-        this.getEnrollmentDate() == otherStudent.getEnrollmentDate();
+        //this.getEnrollmentDate().getTime() == otherStudent.getEnrollmentDate().getTime() &&
+        this.getId() == otherStudent.getId();
+
     } else {
       return false;
     }
@@ -54,6 +55,46 @@ public class Student {
         .addParameter("enrollment_date", enrollment_date)
         .executeUpdate()
         .getKey();
+    }
+  }
+
+  public static Student find(int id){
+    String sql = "SELECT * FROM students WHERE id=:id";
+    try(Connection con = DB.sql2o.open()){
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Student.class);
+    }
+  }
+
+  public void delete() {
+    String sql = "DELETE FROM students WHERE id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      con.createQuery(sql)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  public void updateName(String newName){
+    name = newName;
+    String sql = "UPDATE students SET name=:name WHERE id=:id";
+    try(Connection con = DB.sql2o.open()){
+      con.createQuery(sql)
+        .addParameter("name", name)
+        .addParameter("id", id)
+        .executeUpdate();
+    }
+  }
+
+  public void updateDate(String newDate){
+    this.enrollment_date = java.sql.Date.valueOf(newDate);
+    String sql = "UPDATE students SET enrollment_date=:enrollment_date WHERE id=:id";
+    try(Connection con = DB.sql2o.open()){
+      con.createQuery(sql)
+        .addParameter("enrollment_date", enrollment_date)
+        .addParameter("id", id)
+        .executeUpdate();
     }
   }
 }
