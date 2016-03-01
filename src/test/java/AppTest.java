@@ -94,5 +94,21 @@ public class AppTest extends FluentTest {
     submit("#enrollStudent");
     assertThat(pageSource()).contains("Homer Simpson has been added to ECON304");
   }
-  
+
+  @Test
+  public void addCourseToStudent() {
+    Course economics = new Course("Basic Economics", "ECON101");
+    economics.save();
+    Course homeEconomics = new Course("Home Economics", "ECON304");
+    homeEconomics.save();
+    Student homer = new Student("Homer Simpson", "2016-02-29");
+    homer.save();
+    Student marge = new Student("Marge Simpson", "2016-04-29");
+    marge.save();
+    goTo("http://localhost:4567/students");
+    click("a", withText("Homer Simpson"));
+    click("#course" + economics.getId());
+    submit("#addCourse");
+    assertThat(pageSource()).contains("Homer Simpson has been enrolled in:");
+  }
 }

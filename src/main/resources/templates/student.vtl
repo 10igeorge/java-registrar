@@ -1,0 +1,33 @@
+<h1>$student.getName()</h1>
+<h5>Enrolled $student.getEnrollmentDate()</h5>
+<div class="row">
+  <div class="col-sm-6">
+    <h4>Courses Taking:</h4>
+    <div class="list-group">
+      #foreach($course in $enrolledCourses)
+        <a href="/courses/$course.getId()" class="list-group-item">$course.getCourseName()</a>
+      #end
+    </div>
+
+  </div>
+  <div class="col-sm-6">
+    #if($addedCourses)
+      <h4>$student.getName() has been enrolled in:</h4>
+      #foreach($course in $addedCourses)
+        <h5>$course.getCourseName() - $course.getCourseNumber()</h5>
+      #end
+    #end
+    <h4>Add Courses:</h4>
+    <form action="/students/$student.getId()" method="post">
+      #foreach($course in $allCourses)
+        <div class="checkbox">
+          <label>
+            <input type="checkbox" name="checkCourse" value="$course.getId()" id="course$course.getId()">
+            $course.getCourseName()
+          </label>
+        </div>
+        #end
+        <button type="submit" id="addCourse" class="btn btn-default">Add Classes</button>
+    </form>
+  </div>
+</div>

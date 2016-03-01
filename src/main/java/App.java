@@ -1,5 +1,5 @@
 import java.util.HashMap;
-
+import java.util.ArrayList;
 import spark.ModelAndView;
 import spark.template.velocity.VelocityTemplateEngine;
 
@@ -75,6 +75,39 @@ public class App {
       model.put("course", course);
       model.put("allStudents", Student.all());
       model.put("template", "templates/course.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    get("/students/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int id = Integer.parseInt(request.params("id"));
+      Student student = Student.find(id);
+      model.put("enrolledCourses", student.getCourses());
+      model.put("student", student);
+      model.put("allCourses", Course.all());
+      model.put("template", "templates/student.vtl");
+      return new ModelAndView(model, layout);
+    }, new VelocityTemplateEngine());
+
+    post("/students/:id", (request, response) -> {
+      HashMap<String, Object> model = new HashMap<String, Object>();
+      int id = Integer.parseInt(request.params("id"));
+      Student student = Student.find(id);
+      String[] addedIds = request.queryParamsValues("checkCourse");
+      ArrayList<Course> addedCourses = new ArrayList<Course>();
+      if (addedIds != null) {
+        for (String courseId : addedIds) {
+          student.addCourse(Integer.parseInt(courseId));
+          addedCourses.add(Course.find(Integer.parseInt(courseId)));
+        }
+      }
+
+
+      model.put("addedCourses", addedCourses);
+      model.put("enrolledCourses", student.getCourses());
+      model.put("student", student);
+      model.put("allCourses", Course.all());
+      model.put("template", "templates/student.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
   }
