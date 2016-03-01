@@ -1,0 +1,28 @@
+<h1>$course.getCourseName()</h1>
+<h3>$course.getCourseNumber()</h3>
+<div class="row">
+  <div class="col-sm-6">
+    <h4>Students currently enrolled:</h4>
+    <div class="list-group">
+    #foreach ($student in $enrolledStudents)
+      <a href="/students/$student.getId()" class="list-group-item">$student.getName()</a>
+    #end
+    </div>
+  </div>
+
+  <div class="col-sm-6">
+    #if($addedStudent)
+      <h4>$addedStudent.getName() has been added to $course.getCourseNumber()</h4>
+      <hr />
+    #end
+    <form action="/courses/$course.getId()" method="post">
+      <label for="newStudent">Enroll new student:</label><br>
+      <select name="newStudent">
+        #foreach ($student in $allStudents)
+          <option value="$student.getId()">$student.getName()</option>
+        #end
+      </select>
+      <button type="submit" id="enrollStudent">Enroll</button>
+    </form>
+  </div>
+</div>

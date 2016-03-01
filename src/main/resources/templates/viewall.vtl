@@ -1,0 +1,27 @@
+#if($allStudents)
+  <h1>Students</h1>
+  #foreach ($student in $allStudents)
+    <ul class="list-group">
+      <li class="list-group-item">
+        <dl class="list-group">
+          <dt><a href="/students/$student.getId()">$student.getName()</a></dt>
+          <dd>Enrollment Date: $student.getEnrollmentDate()</dd>
+        </dl>
+      </li>
+    </ul>
+  #end
+#end
+
+#if($allCourses)
+  <h1>Courses</h1>
+  #foreach ($course in $allCourses)
+    <ul class="list-group">
+      <li class="list-group-item">
+        <dl class="list-group">
+          <dt><a href="/courses/$course.getId()">$course.getCourseName()</a></dt>
+          <dd>Course Number: $course.getCourseNumber()</dd>
+        </dl>
+      </li>
+    </ul>
+  #end
+#end
