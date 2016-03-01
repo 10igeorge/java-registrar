@@ -71,9 +71,9 @@ public class CourseTest {
   //   homer.save();
   //   Student marge = new Student("Marge Simpson", "2016-04-29");
   //   marge.save();
-  //   economics.addStudent(homer);
-  //   economics.addStudent(marge);
-  //   homeEconomics.addStudent(homer);
+  //   economics.addStudent(homer.getId());
+  //   economics.addStudent(marge.getId());
+  //   homeEconomics.addStudent(homer.getId());
   //   assertTrue(homeEconomics.getStudents().contains(homer));
   //   assertEquals(economics.getStudents().size(), 2);
   // }

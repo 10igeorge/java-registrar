@@ -1,7 +1,7 @@
 import org.sql2o.*;
 import java.util.List;
 import java.sql.Date;
-
+import java.util.ArrayList;
 
 
 public class Student {
@@ -114,6 +114,17 @@ public class Student {
       List<Integer> allCourseIds = con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetch(Integer.class);
-    }
-  }
+
+      ArrayList<Course> foundCourses = new ArrayList<Course>();
+
+      for(Integer courseId : allCourseIds) {
+        String courseQuery = "SELECT * FROM courses WHERE id=:id";
+        Course thisCourse = con.createQuery(courseQuery)
+          .addParameter("id", courseId)
+          .executeAndFetchFirst(Course.class);
+        foundCourses.add(thisCourse);
+      }
+      return foundCourses;
+    } // end try
+  }// end getCourses
 }
