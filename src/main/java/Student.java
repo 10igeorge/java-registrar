@@ -97,4 +97,23 @@ public class Student {
         .executeUpdate();
     }
   }
+
+  public void addCourse(int courseId){
+    String sql = "INSERT INTO courses_students (course_id, student_id) VALUES (:course_id, :student_id)";
+    try(Connection con = DB.sql2o.open()){
+      con.createQuery(sql)
+        .addParameter("course_id", courseId)
+        .addParameter("student_id", id)
+        .executeUpdate();
+    }
+  }
+
+  public List<Course> getCourses(){
+    String sql = "SELECT course_id FROM courses_students WHERE student_id = :id";
+    try(Connection con = DB.sql2o.open()) {
+      List<Integer> allCourseIds = con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetch(Integer.class);
+    }
+  }
 }

@@ -62,20 +62,20 @@ public class StudentTest {
     assertEquals(homer.getEnrollmentDate(), java.sql.Date.valueOf("2016-02-29"));
   }
 
-  // @Test
-  // public void addCourse_addsACourseToAStudent() {
-  //   Course economics = new Course("Basic Economics", "ECON101");
-  //   economics.save();
-  //   Course homeEconomics = new Course("Home Economics", "ECON304");
-  //   homeEconomics.save();
-  //   Student homer = new Student("Homer Simpson", "2016-02-29");
-  //   homer.save();
-  //   Student marge = new Student("Marge Simpson", "2016-04-29");
-  //   marge.save();
-  //   homer.addCourse(economics);
-  //   marge.addCourse(economics);
-  //   homer.addCourse(homeEconomics);
-  //   assertTrue(homer.getCourses().contains(homeEconomics));
-  //   assertEquals(marge.getCourses().size(), 1);
-  // }
+  @Test
+  public void addCourse_addsACourseToAStudent() {
+    Course economics = new Course("Basic Economics", "ECON101");
+    economics.save();
+    Course homeEconomics = new Course("Home Economics", "ECON304");
+    homeEconomics.save();
+    Student homer = new Student("Homer Simpson", "2016-02-29");
+    homer.save();
+    Student marge = new Student("Marge Simpson", "2016-04-29");
+    marge.save();
+    homer.addCourse(economics.getId());
+    marge.addCourse(economics.getId());
+    homer.addCourse(homeEconomics.getId());
+    assertTrue(homer.getCourses().contains(homeEconomics));
+    assertEquals(marge.getCourses().size(), 1);
+  }
 }
