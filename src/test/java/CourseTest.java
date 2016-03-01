@@ -61,20 +61,20 @@ public class CourseTest {
     assertTrue(savedCourse.equals(economics));
   }
 
-  // @Test
-  // public void addStudent_addsAStudentToACourse() {
-  //   Course economics = new Course("Basic Economics", "ECON101");
-  //   economics.save();
-  //   Course homeEconomics = new Course("Home Economics", "ECON304");
-  //   homeEconomics.save();
-  //   Student homer = new Student("Homer Simpson", "2016-02-29");
-  //   homer.save();
-  //   Student marge = new Student("Marge Simpson", "2016-04-29");
-  //   marge.save();
-  //   economics.addStudent(homer.getId());
-  //   economics.addStudent(marge.getId());
-  //   homeEconomics.addStudent(homer.getId());
-  //   assertTrue(homeEconomics.getStudents().contains(homer));
-  //   assertEquals(economics.getStudents().size(), 2);
-  // }
+  @Test
+  public void addStudent_addsAStudentToACourse() {
+    Course economics = new Course("Basic Economics", "ECON101");
+    economics.save();
+    Course homeEconomics = new Course("Home Economics", "ECON304");
+    homeEconomics.save();
+    Student homer = new Student("Homer Simpson", "2016-02-29");
+    homer.save();
+    Student marge = new Student("Marge Simpson", "2016-04-29");
+    marge.save();
+    economics.addStudent(homer.getId());
+    economics.addStudent(marge.getId());
+    homeEconomics.addStudent(homer.getId());
+    assertTrue(homeEconomics.getStudents().contains(homer));
+    assertEquals(economics.getStudents().size(), 2);
+  }
 }

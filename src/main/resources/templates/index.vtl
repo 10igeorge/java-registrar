@@ -1,0 +1,18 @@
+<div class="row">
+   <div class="col-sm-6"> <!--Add new student -->
+     <form action="/add-student" method="post">
+       <label for="name">Student Name:</label><br>
+       <input type="text" name="name" id="name"><br>
+       <label for="enrollmentDate">Date of Enrollment:</label><br>
+       <input type="date" name="enrollmentDate" id="enrollmentDate"><br><br>
+       <button type="submit" id="createStudent">Create Student</button>
+     </form><br><br>
+    #if ($student)
+      <p>$student.getName() has successfully been added to the registrar</p>
+    #end
+  </div>
+
+  <div class="col-sm-6"><!--Add new course -->
+
+  </div>
+</div>

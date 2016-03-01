@@ -23,13 +23,22 @@ public class AppTest extends FluentTest {
   @ClassRule
   public static ServerRule server = new ServerRule();
 
-  // @Rule
-  // public ClearRule clearRule = new ClearRule();
+  @Rule
+  public DatabaseRule database = new DatabaseRule();
 
   //Integration testing
-  // @Test
-  // public void rootTest() {
-  //   goTo("http://localhost:4567/");
-  //   assertThat(pageSource()).contains("Leap year detector");
-  // }
+  @Test
+  public void rootTest() {
+    goTo("http://localhost:4567/");
+    assertThat(pageSource()).contains("Epicodus University");
+  }
+
+  @Test
+  public void addStudent(){
+    goTo("http://localhost:4567/");
+    fill("#name").with("Mary");
+    fill("#enrollmentDate").with("2000-02-22");
+    submit("#createStudent");
+    assertThat(pageSource()).contains("Mary has successfully been added to the registrar");
+  }
 }
