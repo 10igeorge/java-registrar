@@ -28,4 +28,14 @@ public class CourseTest {
     economics.save();
     assertEquals(Course.all().get(0).getId(), economics.getId());
   }
+
+  @Test
+  public void find_findsASpecificCourseInDatabase() {
+    Course economics = new Course("Basic Economics", "ECON101");
+    economics.save();
+    Course homeEconomics = new Course("Home Economics", "ECON304");
+    homeEconomics.save();
+    Course newCourse = Course.find(economics.getId());
+    assertTrue(newCourse.equals(economics));
+  }
 }

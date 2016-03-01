@@ -28,6 +28,7 @@ public class Course {
     if (newCourse instanceof Course) {
       Course otherCourse = (Course) newCourse;
       return this.getCourseName().equals(otherCourse.getCourseName()) &&
+        this.getId() == otherCourse.getId() &&
         this.getCourseNumber().equals(otherCourse.getCourseNumber());
     } else {
       return false;
@@ -50,6 +51,15 @@ public class Course {
         .addParameter("course_number", course_number)
         .executeUpdate()
         .getKey();
+    }
+  }
+
+  public static Course find(int id){
+    String sql = "SELECT * FROM courses WHERE id=:id";
+    try(Connection con = DB.sql2o.open()){
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetchFirst(Course.class);
     }
   }
 }
