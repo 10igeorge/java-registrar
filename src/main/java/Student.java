@@ -109,12 +109,20 @@ public class Student {
   }
 
   public List<Course> getCourses(){
+  String sql = "SELECT DISTINCT ON (course_name) courses.* FROM students JOIN courses_students ON (students.id = courses_students.student_id) JOIN courses ON (courses_students.course_id = courses.id) WHERE students.id=:id ORDER BY course_name, id";
+  try(Connection con = DB.sql2o.open()) {
+    return con.createQuery(sql)
+      .addParameter("id", id)
+      .executeAndFetch(Course.class);
+    }
+  }
 
-    String sql = "SELECT DISTINCT ON (course_name) courses.* FROM students JOIN courses_students ON (students.id = courses_students.student_id) JOIN courses ON (courses_students.course_id = courses.id) WHERE students.id=:id ORDER BY course_name, id";
+  public List<Course> availableCourses(){
+    String sql = "SELECT * FROM courses WHERE id NOT IN (SELECT course_id FROM courses_students WHERE student_id = :id)";
     try(Connection con = DB.sql2o.open()) {
       return con.createQuery(sql)
         .addParameter("id", id)
         .executeAndFetch(Course.class);
       }
-    }
+  }
 }

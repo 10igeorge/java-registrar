@@ -78,4 +78,16 @@ public class StudentTest {
     assertTrue(homer.getCourses().contains(homeEconomics));
     assertEquals(marge.getCourses().size(), 1);
   }
+
+  @Test
+  public void listAvailable_returnsCoursesStudentIsNotEnrolledIn(){
+    Course economics = new Course("Basic Economics", "ECON101");
+    economics.save();
+    Course homeEconomics = new Course("Home Economics", "ECON304");
+    homeEconomics.save();
+    Student homer = new Student("Homer Simpson", "2016-02-29");
+    homer.save();
+    homer.addCourse(economics.getId());
+    assertFalse(homer.availableCourses().contains(economics));
+  }
 }

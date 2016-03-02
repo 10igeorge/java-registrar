@@ -58,7 +58,7 @@ public class App {
       Course course = Course.find(id);
       model.put("enrolledStudents", course.getStudents());
       model.put("course", course);
-      model.put("allStudents", Student.all());
+      model.put("allStudents", course.availableStudents());
       model.put("template", "templates/course.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -73,7 +73,7 @@ public class App {
       model.put("addedStudent", student);
       model.put("enrolledStudents", course.getStudents());
       model.put("course", course);
-      model.put("allStudents", Student.all());
+      model.put("allStudents", course.availableStudents());
       model.put("template", "templates/course.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -84,7 +84,7 @@ public class App {
       Student student = Student.find(id);
       model.put("enrolledCourses", student.getCourses());
       model.put("student", student);
-      model.put("allCourses", Course.all());
+      model.put("openCourses", student.availableCourses());
       model.put("template", "templates/student.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());
@@ -106,7 +106,7 @@ public class App {
       model.put("addedCourses", addedCourses);
       model.put("enrolledCourses", student.getCourses());
       model.put("student", student);
-      model.put("allCourses", Course.all());
+      model.put("openCourses", student.availableCourses());
       model.put("template", "templates/student.vtl");
       return new ModelAndView(model, layout);
     }, new VelocityTemplateEngine());

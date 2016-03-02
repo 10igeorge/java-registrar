@@ -112,22 +112,14 @@ public class Course {
         .addParameter("id", id)
         .executeAndFetch(Student.class);
     }
+  }
 
-    // try(Connection con = DB.sql2o.open()) {
-    //   List<Integer> allStudentIds = con.createQuery(sql)
-    //     .addParameter("id", id)
-    //     .executeAndFetch(Integer.class);
-    //
-    //   ArrayList<Student> foundStudents = new ArrayList<Student>();
-    //
-    //   for(Integer studentId : allStudentIds) {
-    //     String studentQuery = "SELECT * FROM students WHERE id=:id";
-    //     Student thisStudent = con.createQuery(studentQuery)
-    //       .addParameter("id", studentId)
-    //       .executeAndFetchFirst(Student.class);
-    //     foundStudents.add(thisStudent);
-    //   }
-    //   return foundStudents;
-    // } // end try
-  } // end getStudents
+  public List<Student> availableStudents(){
+    String sql = "SELECT * FROM students WHERE id NOT IN (SELECT student_id FROM courses_students WHERE course_id=:id)";
+    try(Connection con = DB.sql2o.open()) {
+      return con.createQuery(sql)
+        .addParameter("id", id)
+        .executeAndFetch(Student.class);
+    }
+  }
 }

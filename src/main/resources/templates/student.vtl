@@ -19,7 +19,7 @@
     #end
     <h4>Add Courses:</h4>
     <form action="/students/$student.getId()" method="post">
-      #foreach($course in $allCourses)
+      #foreach($course in $openCourses)
         <div class="checkbox">
           <label>
             <input type="checkbox" name="checkCourse" value="$course.getId()" id="course$course.getId()">
