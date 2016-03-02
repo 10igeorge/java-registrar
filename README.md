@@ -2,7 +2,7 @@
 
 #### An app for a registrar to add students and courses and assign them
 
-#### By Abby Rolling & Izzy
+#### By Abby Rolling & Izzy George
 
 ## Description
 
@@ -48,4 +48,4 @@ $ gradle run
 
 Licensed under the GPL.
 
-Copyright (c) 2016 **Abigail Rolling and **
+Copyright (c) 2016 **Abigail Rolling and Isabelle George**
