@@ -40,7 +40,7 @@ public class Student {
   }
 
   public static List<Student> all(){
-    String sql = "SELECT * FROM students";
+    String sql = "SELECT * FROM students ORDER BY enrollment_date";
     try(Connection con = DB.sql2o.open()){
       return con.createQuery(sql)
       .executeAndFetch(Student.class);
