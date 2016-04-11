@@ -1,7 +1,5 @@
 # University Registrar
 
-#### An app for a registrar to add students and courses and assign them
-
 #### By Abby Rolling & Izzy George
 
 ## Description
